@@ -11,11 +11,13 @@ const requestModule = {
     },
   },
   getters: {
-    requests(state) {
-      return state.requests;
+    requests(state, getters, rootState, rootGetters) {
+      //only return requests that have the id of the signed in user
+      const coachId = rootGetters.userId;
+      return state.requests.filter((req) => req.coachId === coachId);
     },
-    hasRequests(state) {
-      return state.requests && state.requests.length > 0;
+    hasRequests(state,getters) {
+      return getters.requests && getters.requests.length > 0;
     },
   },
   actions: {

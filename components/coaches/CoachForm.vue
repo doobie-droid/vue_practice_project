@@ -7,12 +7,12 @@
     </div>
     <div class="form-control" :class="{ invalid: !lastName.isValid }">
       <label for="lastname">Last name</label>
-      <textarea rows="5" id="description" v-model.trim="lastName.val" />
+      <input type="text" id="lastname" v-model.trim="lastName.val" />
       <p v-if="!lastName.isValid">Last Name must not be empty</p>
     </div>
     <div class="form-control" :class="{ invalid: !description.isValid }">
       <label for="description">Description</label>
-      <input type="text" id="description" v-model.number="description.val" />
+      <textarea rows="5"  id="description" v-model.number="description.val" />
       <p v-if="!description.isValid">Description must not be empty</p>
     </div>
     <div class="form-control" :class="{ invalid: !rate.isValid }">
