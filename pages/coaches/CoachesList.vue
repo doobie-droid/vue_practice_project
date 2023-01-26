@@ -49,6 +49,7 @@ export default {
       const coaches = this.$store.getters['coachModule/coaches'];
       console.log(coaches);
       return coaches.filter((coach) => {
+        console.log('Coach Areas: ',coach.areas);
         if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
           return true;
         }

@@ -29,7 +29,7 @@
           value="frontend"
           v-model="areas.val"
         />
-        <label for="frontend">Fronted Development</label>
+        <label for="frontend">Frontend Development</label>
       </div>
       <div>
         <input
@@ -42,7 +42,7 @@
       </div>
       <div>
         <input type="checkbox" id="career" value="career" v-model="areas.val" />
-        <label for="frontend">Career</label>
+        <label for="career">Career</label>
       </div>
       <p v-if="!areas.isValid">Please Check a box</p>
     </div>
@@ -113,11 +113,11 @@ export default {
         return;
       }
       const formData = {
-        first: this.firstName,
-        last: this.lastName,
-        desc: this.description,
-        rate: this.rate,
-        areas: this.areas,
+        first: this.firstName.val,
+        last: this.lastName.val,
+        desc: this.description.val,
+        rate: this.rate.val,
+        areas: this.areas.val,
       };
       this.$emit('save-data', formData);
     },
