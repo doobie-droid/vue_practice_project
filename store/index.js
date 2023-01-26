@@ -1,8 +1,10 @@
 import { createStore } from 'vuex';
 import coachModule from './coach';
+import requestModule from './requests';
 const store = createStore({
   modules: {
     coachModule: coachModule,
+    requestModule: requestModule,
   },
   state() {
     return {
@@ -10,10 +12,10 @@ const store = createStore({
     };
   },
   mutations: {},
-    getters: {
-        userId(state) {
-            return state.userId;
-      }
+  getters: {
+    userId(state) {
+      return state.userId;
+    },
   },
   actions: {},
 });

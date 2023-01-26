@@ -8,7 +8,9 @@
       <label for="message">Messsage</label>
       <textarea rows="5" id="message" v-model.trim="message"></textarea>
     </div>
-    <p class="errors" v-if="!formIsValid">Please enter a valid email and message</p>
+    <p class="errors" v-if="!formIsValid">
+      Please enter a valid email and message
+    </p>
     <div class="actions">
       <base-button>Send Message</base-button>
     </div>
@@ -27,11 +29,24 @@ export default {
   methods: {
     submitForm() {
       this.formIsValid = true;
-      if (this.email === '' || !this.email.includes('@') || this.message === '') {
+      if (
+        this.email === '' ||
+        !this.email.includes('@') ||
+        this.message === ''
+      ) {
         this.formIsValid = false;
         return;
       }
-    }
+      this.$store.dispatch('requestModule/contactCoach', {
+        coachId: this.$route.params.id,
+        email: this.email,
+        message: this.message,
+      });
+      //you use this when you do not want the user to be able to press the back button and go back to this route
+      this.$router.replace('/coaches');
+      // You use this second line when you want to be able to go back to that Route.. like you want the route to be added to history
+      // this.$router.push('/coaches');
+    },
   },
   components: {},
 };
