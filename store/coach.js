@@ -2,6 +2,7 @@ const coachModule = {
   namespaced: true,
   state() {
     return {
+      lastFetch: null,
       coaches: [
         {
           id: 'c1',
@@ -31,6 +32,9 @@ const coachModule = {
     setCoaches(state, payload) {
       state.coaches = payload;
     },
+    setFetchTimeStamp(state) {
+      state.lastFetch = new Date().getTime();
+    },
   },
   getters: {
     coaches(state) {
@@ -43,6 +47,14 @@ const coachModule = {
       const coaches = getters.coaches;
       const userId = rootGetters.userId;
       return coaches.some((coach) => coach.id == userId);
+    },
+    shouldUpdate(state) {
+      const lastFetch = state.lastFetch;
+      if (!lastFetch) {
+        return true;
+      }
+      const currentTimeStamp = new Date().getTime();
+      return (currentTimeStamp - lastFetch) / 1000 > 60;
     },
   },
   actions: {
@@ -74,13 +86,16 @@ const coachModule = {
       });
     },
     async loadCoaches(context) {
+      if (!context.getters.shouldUpdate) {
+        return;
+      }
       const response = await fetch(
         `https://vue-practice-project-34b4f-default-rtdb.firebaseio.com/coaches/.json`
       );
       const responseData = await response.json();
       if (!response.ok) {
         const error = new Error(responseData.message || 'Failed to Fetch Data');
-        throw error
+        throw error;
         //
       }
       const coaches = [];
@@ -96,6 +111,8 @@ const coachModule = {
         coaches.push(coachData);
       }
       context.commit('setCoaches', coaches);
+      //The data below is used to manage time stamp to instruct when to request new data from the server
+      context.commit('setFetchTimestamp');
     },
   },
 };
